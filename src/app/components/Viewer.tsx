@@ -17,13 +17,13 @@ import {
 // Should your own components rely on default controls, throughout the three they're available as:
 //   const controls = useThree(state => state.controls)
 
-useGLTF.preload("/robot.gltf");
+useGLTF.preload("//20250316_lalaBearDraft.gltf");
 
 function Model(props) {
-	const { scene, animations } = useGLTF("/robot-draco.glb");
+	const { scene, animations } = useGLTF("/20250316_lalaBearDraft.glb");
 	const { actions } = useAnimations(animations, scene);
 	useEffect(() => {
-		actions.Idle.play();
+		// actions.Idle.play();
 		scene.traverse(
 			(obj) => obj.isMesh && (obj.receiveShadow = obj.castShadow = true),
 		);

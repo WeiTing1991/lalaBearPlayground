@@ -11,7 +11,7 @@ export default function DashBoard() {
 		console.log("Bear is jumping!");
 	}
 	return (
-		<div className="flex flex-col gap-2">
+		<div className="flex flex-row gap-3 justify-center">
 			<button className="circle-button">
 				Wave
 			</button>

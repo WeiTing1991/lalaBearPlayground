@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #2d4967;
   --foreground: #171717;
 }
 
@@ -12,15 +12,73 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* @media (prefers-color-scheme: dark) { */
+/*   :root { */
+/*     --background: #0a0a0a; */
+/*     --foreground: #ededed; */
+/*   } */
+/* } */
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  cursor: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxMCIgZmlsbD0id2hpdGUiLz48L3N2Zz4="),
+    auto;
+}
+
+button {
+  background-color: #dd5c18;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bolder;
+  pointer-events: all;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  box-shadow: inset 0 0 0 0.09px black;
+
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 30px;
+}
+
+button:hover {
+  box-shadow: inset 250px 0 0 0 black;
+  transform: scale(1.1);
+}
+
+.circle-button {
+  background-color: #dd5c18;
+  border: none;
+  border-radius: 50%;
+  height: 96px;
+  width: 96px;
+  color: white;
+  font-weight: bolder;
+  pointer-events: all;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  border: 1px solid black;
+  box-shadow: 0 0 2px #2d4967;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  transition: box-shadow 0.5s ease;
+}
+
+.circle-button:hover {
+  box-shadow: inset 250px 0 0 0 #4682b4;
+  transform: scale(1.1);
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  grid-row: span 6;
+  gap: 12px;
 }

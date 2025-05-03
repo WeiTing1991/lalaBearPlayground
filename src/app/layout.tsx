@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LaLa Bear Playground",
-  description: "A playground for LaLa Bear",
+  title: "HUHU BEAR Playground",
+  description: "A playground for HuHu Bear",
 };
 
 export default function RootLayout({

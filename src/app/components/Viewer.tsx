@@ -2,16 +2,17 @@
 
 import * as REACT from "react";
 import { Suspense, useEffect, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import {
   useGLTF,
   OrbitControls,
   CameraShake,
   useAnimations,
-  ContactShadows,
+  Stage,
 } from "@react-three/drei";
 
 import * as THREE from "three";
+import DashBoard from "./DashBoard";
 
 // Handling controls in Threejs is hard bc 3rd party components that change the camera need to know
 // about controls, or else all changes are overwritten. That is the case for both <Stage and <CameraShake.
@@ -36,6 +37,56 @@ function Model(props: REACT.PropsWithChildren) {
     });
   }, [actions, scene]);
   return <primitive object={scene} {...props} />;
+}
+
+interface BackgroundProps {
+  imagePath: string;
+}
+
+interface BackgroundProps {
+  imagePath: string;
+  fitType?: "cover" | "contain" | "stretch";
+}
+
+function Background({ imagePath, fitType = "cover" }: BackgroundProps) {
+  const { scene, size } = useThree();
+  const texture = useLoader(THREE.TextureLoader, imagePath);
+
+  useEffect(() => {
+    if (!texture.image) return;
+
+    const imageAspect = texture.image.width / texture.image.height;
+    const canvasAspect = size.width / size.height;
+
+    texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
+    if (fitType === "cover") {
+      // Cover: ensure image covers the entire canvas (may crop image)
+      if (imageAspect > canvasAspect) {
+        texture.repeat.set(canvasAspect / imageAspect, 1);
+        texture.offset.set((1 - canvasAspect / imageAspect) / 2, 0);
+      } else {
+        texture.repeat.set(1, imageAspect / canvasAspect);
+        texture.offset.set(0, (1 - imageAspect / canvasAspect) / 2);
+      }
+    } else if (fitType === "contain") {
+      // Contain: ensure entire image is visible (may show background color)
+      if (imageAspect > canvasAspect) {
+        texture.repeat.set(1, imageAspect / canvasAspect);
+        texture.offset.set(0, (1 - imageAspect / canvasAspect) / 2);
+      } else {
+        texture.repeat.set(canvasAspect / imageAspect, 1);
+        texture.offset.set((1 - canvasAspect / imageAspect) / 2, 0);
+      }
+    } else {
+      // Stretch: stretch image to fill canvas (may distort image)
+      texture.repeat.set(1, 1);
+      texture.offset.set(0, 0);
+    }
+
+    scene.background = texture;
+  }, [texture, scene, size, fitType]);
+
+  return null;
 }
 
 function Light() {
@@ -63,9 +114,16 @@ export default function ModelViwer() {
     <Canvas shadows camera={{ fov: 50 }}>
       <Suspense fallback={null}>
         <ambientLight intensity={0.3} />
-        <Model />
-        <Light />
-        <ContactShadows opacity={0.5} scale={10} blur={2} far={10} />
+        <Background imagePath="/temp_background.jpg" fitType="contain" />
+        <Stage
+          adjustCamera
+          intensity={0.5}
+          shadows="contact"
+          environment="city"
+        >
+          <Model scale={0.1} />
+          <Light />
+        </Stage>
       </Suspense>
       <OrbitControls makeDefault />
       <CameraShake

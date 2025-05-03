@@ -2,6 +2,10 @@
 
 > [NOTE]: WIP
 
+> DEMO
+![Demo](./doc/demo.png)
+
+
 ## DOCKERIZE
 
 ```bash
@@ -14,7 +18,6 @@ docker run -it -p 3000:3000 lala-bear
 docker run -d -p 3000:3000 lala-bear
 
 ```
-
 
 ## NEXTJS
 ```bash

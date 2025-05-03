@@ -1,6 +1,5 @@
 // import Image from "next/image";
 import ModelViewer from "./components/Viewer";
-import DashBoard from "./components/DashBoard";
 
 export default function Home() {
   return (
@@ -13,10 +12,7 @@ export default function Home() {
         {/* 3D canvas */}
         <div className="flex-grow">
           <ModelViewer />
-        </div>
-
-        <div className="w-full">
-          <DashBoard />
+          {/* <DashBoard /> */}
         </div>
       </div>
     </div>
